@@ -39,19 +39,19 @@ function enviarNuevoArchivo(){
 
 var parametros = new FormData($("#form_nuevo_archivo")[0]);
 $('#gif_carga').html(
-              "<center style='margin-left: 50%;'><img src='loader.gif'/></center>"+
-              "<h4 style='margin-left: 23rem;'>Espere Por Favor</h4>"
+              "<div class='col-md-12 col-xs-12'><center><img src='loader.gif'/></center></div>"+
+              "<div class='col-md-12 col-xs-12'><center><h4 >Espere Por Favor</h4></center></div>"
               );
       $.ajax({
           data: parametros,
-          url:"subida.php",
+          url:"subida_firefox.php",
           type:"POST",
           contentType:false,
           processData:false,
           beforesend: function(){
            $('#gif_carga').html(
-              "<center style='margin-left: 50%;'><img src='loader.gif'/></center>"+
-              "<h4 style='margin-left: 26rem;'>Espere Por Favor</h4>"
+             "<div class='col-md-12 col-xs-12'><center><img src='loader.gif'/></center></div>"+
+             "<div class='col-md-12 col-xs-12'><center><h4 >Espere Por Favor</h4></center></div>"
               );
           },
           success: function(data){

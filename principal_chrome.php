@@ -1,37 +1,12 @@
-<?php
-session_start();
-
-	if (isset($_POST['clave']) AND !empty($_POST['clave'])) {
-			if ($_POST['clave']=='Maracaibo02') {
-					$_SESSION['desbloqueo'] = 'desbloqueado';
-					$_SESSION['tiempo'] = time();
-			}else{
-				echo '<script type="text/javascript">alert("Clave Incorrecta!!!");</script>';
-			}
-
-	}
-
-if(isset($_SESSION['tiempo']) ) {
-		$inactivo = 600;
-		 $vida_session = time() - $_SESSION['tiempo'];
-		 if($vida_session > $inactivo)
-			 {
-				 session_destroy();
-				 header("Location: index.php");
-			 }
-	 }
-
-$_SESSION['tiempo'] = time();
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+  <meta http-equiv = "cache-control" content = "no-cache" />
 	<title>Sistema de Subida de Archivos</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="subida.css">
 </head>
 <body>
 <!---->
@@ -48,7 +23,7 @@ include('conexion.php');
 
 <!--TITULO-->
 	<div class="row" style="margin-top: 50px;">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><center><h2>Optimizaci&oacute;n de Producci&oacute;n</h2></center></div>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><center><h2>Sistema de Subida de Archivos</h2></center></div>
 		<?php if (!isset($_SESSION['desbloqueo']) AND empty($_SESSION['desbloqueo'])): ?>
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 						<center><button class="btn btn-danger" id='mostrar_botones' data-toggle="modal" data-target="#exampleModal">Sistema bloqueado</button></center>
@@ -72,21 +47,37 @@ include('conexion.php');
 <?php if ( isset($_SESSION['desbloqueo']) AND !empty($_SESSION['desbloqueo'])): ?>
 		<div class="row" style="margin-top: 50px; border: 1px solid black; padding-top: 15px; height: 150px;" id="gif_carga">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<form  style='padding-top: 2.5rem;' id="form_nuevo_archivo" method="POST" enctype="multipart/form-data" onsubmit="enviarNuevoArchivo(); return false">
+				<form method="POST" id="formulario">
 				 	 <div class="form-group row">
 		   				 <label for="subir_archivo" class="col-lg-2 col-md-2 col-sm-2 col-xs-12 col-form-label">Subir Archivo</label>
-					    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+					    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					      <input required type="file" class="form-control" id="subir_archivo" name="subir_archivo[]" multiple>
 					    </div>
 
-					    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-					 				<button type="submit" class="btn btn-primary" >Enviar Archivo</button>
-					    </div>
+
+					    <!--<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+					 				<button type="submit" class="btn btn-primary" id="boton_envio">Enviar Archivo</button>
+					    </div>-->
 	  				</div>
 
 				</form>
 			</div>
 		</div>
+		<!--CODIGO PARA LA BARRA DE ESTADO-->
+
+		<div class="row" style="margin-top: 50px;">
+
+						<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+									<div id="cantidad_barra" class="progress oculto">
+									</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+									<center><a onclick="return confirm('Seguro?, espere unos segundos despues de cargar un archivo por favor')" id="boton_recarga" href="index.php" class="btn btn-success oculto">Recargar Tabla</a></center>
+						</div>
+
+		</div>
+		<!--CODIGO PARA LA BARRA DE ESTADO-->
  <?php endif ?>
 
 <!--FORMULARIO-->
@@ -189,8 +180,11 @@ $newDate = date("d-m-Y", strtotime($fecha_bbdd));
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
-<script src="app.js"></script>
 
-</body>
-</html>
+
+
+
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+<script src="subida.js"></script>
+
+<script src="app.js"></script>

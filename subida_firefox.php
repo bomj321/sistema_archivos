@@ -28,11 +28,5 @@ if (isset($_FILES['subir_archivo'])) {/*IF PARA VERIFICAR QUE EXISTE LA VARIABLE
                                 mysqli_stmt_close($resultado);
                  }/*FOR*/
 
-             echo "
-                      <script>
-                    window.location.href='index.php';
-                    </script>
-            ";
-
  }  /*IF PARA VERIFICAR QUE EXISTE LA VARIABLE*/
  ?>
